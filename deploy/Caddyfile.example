@@ -1,0 +1,5 @@
+# Example only. Run a separately managed reverse proxy after DNS is configured.
+buoybay.net, www.buoybay.net {
+    encode zstd gzip
+    reverse_proxy 127.0.0.1:8080
+}

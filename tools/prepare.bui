@@ -1,0 +1,56 @@
+' Stage local SDK dependency and public assets before compiling the site server.
+Function Main(args As Array Of String) As Integer
+    Try
+        Dim root As New FileSystemItem(FileSystemItem.ExecutableDirectory())
+        While root <> Nil
+            If root.Child("src/main.bui").IsFile() And root.Child("public/index.html").IsFile() Then Exit While
+            root = root.Parent
+        End While
+        If root = Nil Then Throw New IOException("Run this executable from a local/ subdirectory of the checkout")
+        Dim installed As String = System.EnvironmentVariable("BUOY_PACKAGES_DIR").Or("")
+        If installed = "" Then
+            #If TargetMac Then
+                installed = "/Applications/Buoy/packages"
+            #ElseIf TargetLinux Then
+                installed = "/usr/share/buoy/packages"
+            #Else
+                Throw New IOException("Set BUOY_PACKAGES_DIR to your installed Buoy packages directory")
+            #End If
+        End If
+        Dim source As New FileSystemItem(Path.Join(installed, "HTTPServer-1.1.0.buipkg"))
+        If Not source.IsFile() Then Throw New IOException("HTTPServer-1.1.0.buipkg not found in BUOY_PACKAGES_DIR or the standard Buoy install")
+        If Not root.Child("packages").CreateFolder(True) Then Throw New IOException("Cannot create local packages directory")
+        Dim dependency As FileSystemItem = root.Child("packages/HTTPServer-1.1.0.buipkg")
+        If dependency.Exists() Then
+            If Not dependency.Delete() Then Throw New IOException("Cannot replace local HTTPServer archive")
+        End If
+        If Not source.CopyTo(dependency) Then Throw New IOException("Cannot stage HTTPServer archive")
+        Dim output As FileSystemItem = root.Child("dist/app/public")
+        If Not output.CreateFolder(True) Then Throw New IOException("Cannot create app asset directory")
+        Dim oldCatalog As FileSystemItem = output.Child("catalog.json")
+        If oldCatalog.Exists() Then
+            If Not oldCatalog.Delete() Then Throw New IOException("Cannot remove obsolete public catalog copy")
+        End If
+        For Each name As String In ["index.html", "site.css", "site.js"]
+            Dim destination As FileSystemItem = output.Child(name)
+            If destination.Exists() Then
+                If Not destination.Delete() Then Throw New IOException("Cannot replace public asset: " + name)
+            End If
+            If Not root.Child("public").Child(name).CopyTo(destination) Then Throw New IOException("Cannot copy public asset: " + name)
+        Next
+        Dim content As FileSystemItem = root.Child("dist/app/content")
+        If Not content.CreateFolder(True) Then Throw New IOException("Cannot create app content directory")
+        For Each name As String In ["site.json", "catalog.json", "LICENSE"]
+            Dim destination As FileSystemItem = content.Child(name)
+            If destination.Exists() Then
+                If Not destination.Delete() Then Throw New IOException("Cannot replace content: " + name)
+            End If
+            If Not root.Child("content").Child(name).CopyTo(destination) Then Throw New IOException("Cannot copy content: " + name)
+        Next
+        Print "Staged HTTPServer 1.1.0 and public assets in " + root.FullPath()
+        Return 0
+    Catch ex As Exception
+        StdErr.WriteLine("prepare: " + ex.Message)
+        Return 1
+    End Try
+End Function

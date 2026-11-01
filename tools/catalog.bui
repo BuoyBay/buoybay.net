@@ -1,0 +1,65 @@
+' Generate website-safe content from the workspace's publication policy and catalog.
+Function Load(file As FileSystemItem) As JSONItem
+    Dim data As Result Of String, String = file.ReadAllText()
+    If data.IsErr Then Throw New IOException("Cannot read " + file.FullPath())
+    Return Json.Parse(data.Value)
+End Function
+
+Function Listed(record As JSONItem) As Boolean
+    Dim policy As JSONItem = record.Value("publication")
+    If Not policy.IsObject() Then Return True
+    If policy.Value("visibility").AsString().Or("") = "private" Then Return False
+    If policy.Value("hold").AsString().Or("") <> "" Then Return False
+    Return policy.Value("listed").AsBoolean().Or(True)
+End Function
+
+Function Main(args As Array Of String) As Integer
+    Try
+        If args.Count <> 3 Then Throw New InvalidArgumentException("usage: catalog WORKSPACE_ROOT DESCRIPTIONS_JSON")
+        Dim workspace As New FileSystemItem(args(1))
+        Dim repositories As JSONItem = Load(workspace.Child("workspace.json")).Value("repositories")
+        Dim published As JSONItem = Load(workspace.Child("packages.json")).Value("packages")
+        Dim descriptions As JSONItem = Load(New FileSystemItem(args(2)))
+        If Not repositories.IsArray() Or Not published.IsArray() Or Not descriptions.IsObject() Then Throw New InvalidArgumentException("Invalid workspace, package catalog or description schema")
+        Dim records As JSONItem = JSONItem.NewObject()
+        For i As Integer = 0 To repositories.Count() - 1
+            Dim record As JSONItem = repositories.ValueAt(i)
+            Dim name As String = record.Value("name").AsString().Or("")
+            records.Value(name) = record
+        Next
+        Dim root As New FileSystemItem(FileSystemItem.ExecutableDirectory())
+        While root <> Nil
+            If root.Child("content/catalog.json").IsFile() Then Exit While
+            root = root.Parent
+        End While
+        If root = Nil Then Throw New IOException("Compile this tool into a local/ subdirectory of the site checkout")
+        Dim categories As JSONItem = JSONItem.NewObject()
+        Dim previous As JSONItem = Load(root.Child("content/catalog.json"))
+        For i As Integer = 0 To previous.Count() - 1
+            Dim item As JSONItem = previous.ValueAt(i)
+            categories.Value(item.Value("name").AsString().Or("")) = item.Value("category")
+        Next
+        Dim catalogData As JSONItem = JSONItem.NewArray()
+        For i As Integer = 0 To published.Count() - 1
+            Dim packageEntry As JSONItem = published.ValueAt(i)
+            Dim name As String = packageEntry.Value("name").AsString().Or("")
+            If Not records.HasKey(name) Then Throw New InvalidArgumentException("Catalog package missing from workspace policy")
+            Dim record As JSONItem = records.Value(name)
+            If Not Listed(record) Then Continue For
+            Dim description As String = descriptions.Value(name).AsString().Or("")
+            If description = "" Then Throw New InvalidArgumentException("Missing public package description: " + name)
+            Dim item As JSONItem = JSONItem.NewObject()
+            item.Value("name") = name
+            item.Value("description") = description
+            item.Value("category") = categories.Value(name).AsString().Or("data")
+            catalogData.Add(item)
+        Next
+        Dim options As New JSONOptions
+        options.Compact = False
+        Print Json.Stringify(catalogData, options)
+        Return 0
+    Catch ex As Exception
+        StdErr.WriteLine("catalog: " + ex.Message)
+        Return 1
+    End Try
+End Function

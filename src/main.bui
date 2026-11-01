@@ -1,0 +1,143 @@
+' BuoyBay's public site: immutable assets and a small native HTTP service.
+Package HTTPServer
+
+Class SiteContent
+    Public Shared Property HTML As String
+    Public Shared Property CSS As String
+    Public Shared Property Script As String
+    Public Shared Property Catalog As String
+    Public Shared Property SourceURL As String
+End Class
+
+Sub Headers(response As HttpResponse, contentType As String)
+    response.SetHeader("Content-Type", contentType)
+    response.SetHeader("X-Content-Type-Options", "nosniff")
+    response.SetHeader("Referrer-Policy", "strict-origin-when-cross-origin")
+    response.SetHeader("Content-Security-Policy", "default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; frame-ancestors 'none'")
+    response.SetHeader("Cache-Control", "no-cache")
+End Sub
+
+Function Readable(request As HttpRequest, response As HttpResponse) As Boolean
+    If request.Method = "GET" Or request.Method = "HEAD" Then Return True
+    Headers(response, "text/plain; charset=utf-8")
+    response.StatusCode = 405
+    response.SetHeader("Allow", "GET, HEAD")
+    response.Write("Method not allowed\n")
+    Return False
+End Function
+
+Sub Reply(request As HttpRequest, response As HttpResponse, contentType As String, body As String)
+    If Not Readable(request, response) Then Return
+    Headers(response, contentType)
+    If request.Method = "GET" Then response.Write(body)
+End Sub
+
+Sub Home(request As HttpRequest, response As HttpResponse)
+    Reply(request, response, "text/html; charset=utf-8", SiteContent.HTML)
+End Sub
+
+Sub Styles(request As HttpRequest, response As HttpResponse)
+    Reply(request, response, "text/css; charset=utf-8", SiteContent.CSS)
+End Sub
+
+Sub Script(request As HttpRequest, response As HttpResponse)
+    Reply(request, response, "text/javascript; charset=utf-8", SiteContent.Script)
+End Sub
+
+Sub Catalog(request As HttpRequest, response As HttpResponse)
+    Reply(request, response, "application/json; charset=utf-8", SiteContent.Catalog)
+End Sub
+
+Sub Health(request As HttpRequest, response As HttpResponse)
+    Reply(request, response, "application/json; charset=utf-8", "{\"status\":\"ok\",\"service\":\"buoybay.net\"}\n")
+End Sub
+
+Sub Source(request As HttpRequest, response As HttpResponse)
+    If Not Readable(request, response) Then Return
+    Headers(response, "text/plain; charset=utf-8")
+    response.StatusCode = 302
+    response.SetHeader("Location", SiteContent.SourceURL)
+    If request.Method = "GET" Then response.Write("Site source: " + SiteContent.SourceURL + "\n")
+End Sub
+
+Class SiteServer Inherits HTTPServer
+    Public Overrides Sub OnNotFound(request As HttpRequest, response As HttpResponse)
+        Headers(response, "text/plain; charset=utf-8")
+        response.StatusCode = 404
+        response.Write("Not found\n")
+    End Sub
+
+    Public Overrides Sub OnUnhandledError(request As HttpRequest, response As HttpResponse, ex As Exception)
+        Headers(response, "text/plain; charset=utf-8")
+        response.StatusCode = 500
+        response.Write("Request failed\n")
+    End Sub
+End Class
+
+Function ReadAsset(root As FileSystemItem, name As String) As String
+    Dim data As Result Of String, String = root.Child(name).ReadAllText()
+    If data.IsErr Then Throw New IOException("Cannot read public asset: " + name)
+    Return data.Value
+End Function
+
+Function EscapeHTML(value As String) As String
+    Dim escaped As String = String.Replace(value, "&", "&amp;")
+    escaped = String.Replace(escaped, "<", "&lt;")
+    escaped = String.Replace(escaped, ">", "&gt;")
+    escaped = String.Replace(escaped, "\"", "&quot;")
+    Return String.Replace(escaped, "'", "&#39;")
+End Function
+
+Function Main(args As Array Of String) As Integer
+    Try
+        If args.Count > 1 Then
+            If args.Count = 2 And args(1) = "--help" Then
+                Print "buoybay.net — native HTTP site server"
+                Print "Environment: PORT=8080 BUOYBAY_PUBLIC_DIR=<assets> BUOYBAY_CONTENT_DIR=<content> SOURCE_URL=<corresponding source URL>"
+                Return 0
+            End If
+            Throw New InvalidArgumentException("Use --help or configure PORT and BUOYBAY_PUBLIC_DIR")
+        End If
+        Dim port As Result Of Integer, String = Integer.Parse(System.EnvironmentVariable("PORT").Or("8080"))
+        If port.IsErr Then Throw New InvalidArgumentException("PORT must be an integer")
+        If port.Value < 1 Or port.Value > 65535 Then Throw New InvalidArgumentException("PORT must be 1..65535")
+        SiteContent.SourceURL = System.EnvironmentVariable("SOURCE_URL").Or("https://github.com/BuoyBay/buoybay.net")
+        If Not String.StartsWith(SiteContent.SourceURL, "https://") And Not String.StartsWith(SiteContent.SourceURL, "http://") Then Throw New InvalidArgumentException("SOURCE_URL must be an HTTP or HTTPS URL")
+        For Each character As String In String.Chars(SiteContent.SourceURL)
+            If String.Contains("\r\n\t ", character) Then Throw New InvalidArgumentException("SOURCE_URL cannot contain whitespace")
+        Next
+        Dim root As New FileSystemItem(System.EnvironmentVariable("BUOYBAY_PUBLIC_DIR").Or(Path.Join(FileSystemItem.ExecutableDirectory(), "public")))
+        Dim content As New FileSystemItem(System.EnvironmentVariable("BUOYBAY_CONTENT_DIR").Or(Path.Join(FileSystemItem.ExecutableDirectory(), "content")))
+        SiteContent.HTML = ReadAsset(root, "index.html")
+        Dim copy As JSONItem = Json.Parse(ReadAsset(content, "site.json"))
+        If Not copy.IsObject() Then Throw New InvalidArgumentException("site.json must contain an object")
+        For Each key As String In copy.Keys()
+            If Not copy.Value(key).IsString() Then Throw New InvalidArgumentException("Every site.json value must be a string")
+            SiteContent.HTML = String.Replace(SiteContent.HTML, "{{copy." + key + "}}", EscapeHTML(copy.Value(key).AsString().Value))
+        Next
+        If String.Contains(SiteContent.HTML, "{{copy.") Then Throw New InvalidArgumentException("Missing site.json copy key")
+        SiteContent.CSS = ReadAsset(root, "site.css")
+        SiteContent.Script = ReadAsset(root, "site.js")
+        SiteContent.Catalog = ReadAsset(content, "catalog.json")
+        Dim catalogData As JSONItem = Json.Parse(SiteContent.Catalog)
+        If Not catalogData.IsArray() Then Throw New InvalidArgumentException("catalog.json must contain an array")
+        Dim server As New SiteServer()
+        server.Port = port.Value
+        server.ConnectionTimeout = 10000
+        server.MaxBodyBytes = 1024
+        server.MaxHeaderBytes = 8192
+        server.Any("/", AddressOf Home)
+        server.Any("/site.css", AddressOf Styles)
+        server.Any("/site.js", AddressOf Script)
+        server.Any("/catalog.json", AddressOf Catalog)
+        server.Any("/healthz", AddressOf Health)
+        server.Any("/source", AddressOf Source)
+        server.Listen()
+        Print "buoybay.net listening on port " + String.From(server.Port)
+        RunLoop.Run()
+        Return 0
+    Catch ex As Exception
+        StdErr.WriteLine("buoybay.net: " + ex.Message)
+        Return 1
+    End Try
+End Function

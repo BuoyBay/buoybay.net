@@ -1,0 +1,617 @@
+[
+    {
+        "name": "agentkit",
+        "description": "JSONL protocols for agent and MCP integrations for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "agentsession",
+        "description": "Run local agent sessions over owned subprocess pipes for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "algorithmkit",
+        "description": "Comparator-based search and stable sorting for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "appearance",
+        "description": "Read system appearance and accessibility preferences for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "arrayutils",
+        "description": "Edit arrays and compute numeric reductions for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "atomicfilekit",
+        "description": "Replace files atomically with bounded staged writes for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "audiocuekit",
+        "description": "Mix PCM WAV cues and play them through SDL2 for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "binarycursor",
+        "description": "Read binary records with exact bounds and byte order for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "binarywriter",
+        "description": "Write endian-aware binary records and canonical varints for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "bluetoothkit",
+        "description": "Discover Bluetooth adapters through native OS APIs for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "bookmarks",
+        "description": "Create and resolve macOS file bookmarks for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "bufferkit",
+        "description": "Spool bytes into bounded memory or temporary storage for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "buildkit",
+        "description": "Decode compiler diagnostics and streaming build logs for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "bundleinfo",
+        "description": "Read application bundle identity and resources for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "chatgptauth",
+        "description": "ChatGPT sign-in and renewable account sessions for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "chatkit",
+        "description": "Embed a native agent chat panel in a Buoy application",
+        "category": "developer"
+    },
+    {
+        "name": "clipboardkit",
+        "description": "Exchange validated multi-format clipboard payloads for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "collectionskit",
+        "description": "Generic hash maps and sets with explicit key policies for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "complexkit",
+        "description": "Complex arithmetic and principal elementary functions for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "compressionkit",
+        "description": "Stream gzip and zlib data with explicit resource bounds for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "controlsnapshot",
+        "description": "Capture native control state for visual design tools for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "couchdb",
+        "description": "Query CouchDB documents, views, changes and attachments for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "cryptokit",
+        "description": "Secure tokens and authenticated AES-GCM envelopes for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "csvkit",
+        "description": "Parse and write strict CSV documents and streams for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "dataadapterskit",
+        "description": "Convert XLSX, JSON tables and CSV with explicit policies for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "dateparsekit",
+        "description": "Parse strict Gregorian timestamps with explicit offsets for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "designerwidgets",
+        "description": "Reusable controls and renderers for layout designers for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "desktopevents",
+        "description": "Observe desktop session events through native backends for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "desktopmenus",
+        "description": "Build native menus, shortcuts and window commands for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "diffkit",
+        "description": "Create line diffs and unified patches for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "discoverykit",
+        "description": "Encode DNS packets and query mDNS services for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "diskspace",
+        "description": "Read filesystem capacity and caller-available space for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "dock",
+        "description": "Control macOS Dock badges and attention requests for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "editorkit",
+        "description": "Unicode text editing with transactions and undo for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "fftkit",
+        "description": "Radix-2 FFTs and spectral window functions for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "fieldkit",
+        "description": "Connect native fields to typed formatting and masks for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "filemetadata",
+        "description": "Read and update Finder tags and native file metadata for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "filesystemkit",
+        "description": "Inspect filesystem entries and update timestamps explicitly for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "filetypes",
+        "description": "Identify file types through UTType and portable name guesses for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "fontcanvas",
+        "description": "Measure private Windows fonts and render them to Pictures for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "fontkit",
+        "description": "Discover fonts and register process-local font files for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "forgejokit",
+        "description": "Access Forgejo repositories, issues and pull requests for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "formatcontrols",
+        "description": "Persist formatting profiles for native numeric and date fields for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "formatkit",
+        "description": "Parse and format localized numbers with explicit profiles for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "formquerykit",
+        "description": "Encode and decode forms and ordered query pairs for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "fuzzyfind",
+        "description": "Rank Unicode subsequence matches for quick-open interfaces for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "gameloopkit",
+        "description": "Drive fixed-step physics and interpolated sprite updates for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "githubkit",
+        "description": "Access GitHub and GitHub Enterprise repository APIs for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "gitkit",
+        "description": "Inspect local Git status and diffs with embedded libgit2 for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "guilintkit",
+        "description": "Lint native GUI layouts with extensible rules for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "hexgridkit",
+        "description": "Compute axial hex geometry, neighbors and pixel picking for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "httpkit",
+        "description": "Route HTTP requests with middleware and static responses for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "jsonrows",
+        "description": "Read immutable JSON object tables through typed cursors for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "keychain",
+        "description": "Store scoped credentials in native OS credential stores for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "layoutcanvas",
+        "description": "Embed a native layout canvas and property inspector for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "layoutkit",
+        "description": "Inspect and edit declarative layouts without a GUI for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "linearkit",
+        "description": "Dense vectors, matrices and linear-system solvers for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "localekit",
+        "description": "Select CLDR plural forms from exact decimal text for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "loginitems",
+        "description": "Register macOS applications to launch at login for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "logkit",
+        "description": "Write severity-filtered logs with bounded file rotation for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "lspkit",
+        "description": "Frame and correlate LSP JSON-RPC messages for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "mailkit",
+        "description": "Compose MIME messages and submit mail over SMTP for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "maskkit",
+        "description": "Compile and apply partial-match text input masks for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "mathkit",
+        "description": "Checked integer arithmetic and stable scalar helpers for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "modelkit",
+        "description": "Call model APIs with typed tools and streaming replies for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "moneykit",
+        "description": "Compute exact currency amounts, rates and allocations for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "networkinfo",
+        "description": "Discover native network interface addresses and scope IDs for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "normalizationkit",
+        "description": "Normalize Unicode text to NFC, NFD, NFKC and NFKD for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "notifications",
+        "description": "Authorize and schedule macOS local notifications for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "odbckit",
+        "description": "Use ODBC databases with native bound parameters for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "optionkit",
+        "description": "Parse command-line flags, values and positionals for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "pdfkit",
+        "description": "Read PDF text, metadata and encrypted documents on macOS for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "permissionkit",
+        "description": "Inspect requester identity and manage macOS permissions for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "pgsql",
+        "description": "Use PostgreSQL through Buoy's Database API",
+        "category": "network"
+    },
+    {
+        "name": "physicskit",
+        "description": "Simulate fixed-step circle and static-box collisions for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "plistkit",
+        "description": "Read and write XML and binary property lists for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "plotkit",
+        "description": "Build XY plots with transforms, ticks and drawing models for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "poweractivity",
+        "description": "Manage scoped macOS process and user activities for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "previewkit",
+        "description": "Host native previews and publish control snapshots for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "printing",
+        "description": "Print native controls and export in-memory PDFs for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "priorityqueuekit",
+        "description": "Stable generic min-priority queues for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "processkit",
+        "description": "Run child processes with separate nonblocking pipes for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "progresskit",
+        "description": "Track weighted progress trees and cooperative cancellation for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "projectkit",
+        "description": "Manage project buffers and reviewed edit proposals for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "quicklook",
+        "description": "Preview files with native macOS Quick Look for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "randomkit",
+        "description": "Generate reproducible random sequences and samples for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "rbclassic",
+        "description": "Use REALbasic-compatible adapters and API aliases for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "rediskit",
+        "description": "Encode RESP2 messages and run synchronous Redis pipelines for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "resourcekit",
+        "description": "Resolve ordered resources with caching and expiry for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "richtext",
+        "description": "Encode RTF and extract plain text through native APIs for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "scene3dkit",
+        "description": "Render 3D scenes with meshes, materials and glTF assets for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "scraping",
+        "description": "Extract DOM data and manage explicit crawl queues for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "secretstore",
+        "description": "Persist protected UTF-8 records in native credential stores for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "settingskit",
+        "description": "Manage typed transactional settings and persistence for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "shapingkit",
+        "description": "Measure and render shaped text with Linux Pango and Cairo for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "sharing",
+        "description": "Present native macOS sharing services for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "sound",
+        "description": "Play local audio with explicit native lifetimes for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "speech",
+        "description": "Speak text and discover macOS voices for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "spellcheck",
+        "description": "Check spelling and request native suggestions for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "spreadsheetkit",
+        "description": "Read XLSX workbooks into sparse typed cells for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "spritekit",
+        "description": "Render ordered 2D sprite scenes and animation for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "sqlbuilderkit",
+        "description": "Build SQLite CRUD statements with bound values for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "starterkit",
+        "description": "Publish and subscribe to application topics for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "statskit",
+        "description": "Compute statistics, regression and streaming moments for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "statusbar",
+        "description": "Manage menu-bar and tray status items for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "stringquerykit",
+        "description": "Compose string predicates and transformations for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "stringutils",
+        "description": "Search and transform Unicode text with explicit policies for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "styledtext",
+        "description": "Edit and serialize portable styled Unicode text for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "styledtextui",
+        "description": "Embed a native rich-text editor over StyledText documents for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "systeminfo",
+        "description": "Read OS, process, CPU, memory and uptime snapshots for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "temporalkit",
+        "description": "Represent Gregorian dates, wall time and elapsed milliseconds for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "terminalkit",
+        "description": "Run PTY and ConPTY sessions with an ANSI terminal grid for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "testkit",
+        "description": "Define test cases, assertions, cleanup and structured results for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "textmetrics",
+        "description": "Resolve fonts and measure text in logical points for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "thinkgearkit",
+        "description": "Decode ThinkGear data and connect to MindWave devices for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "timezonekit",
+        "description": "Resolve IANA timezones and daylight-saving transitions for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "treesitter",
+        "description": "Parse and query syntax with incremental tree-sitter trees for Buoy",
+        "category": "developer"
+    },
+    {
+        "name": "updatekit",
+        "description": "Install signed updates from feeds or GitHub Releases for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "urikit",
+        "description": "Parse URI references and apply RFC3986 resolution for Buoy",
+        "category": "network"
+    },
+    {
+        "name": "usbkit",
+        "description": "Discover USB devices through native OS APIs for Buoy",
+        "category": "desktop"
+    },
+    {
+        "name": "uuidkit",
+        "description": "Parse UUIDs and generate cryptographically random UUIDv4 values for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "variantkit",
+        "description": "Use exact numeric Variant keys in ordered collections for Buoy",
+        "category": "data"
+    },
+    {
+        "name": "workspace",
+        "description": "Open URLs and reveal files through the desktop shell for Buoy",
+        "category": "developer"
+    }
+]
