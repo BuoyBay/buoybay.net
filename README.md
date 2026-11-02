@@ -1,6 +1,6 @@
-# A native web service and package catalog for buoybay.net
+# Package catalog and project website served by a native HTTP server
 
-BuoyBay's developer site introduces reusable Buoy packages, BPM, Ahoy, and Buoy Bay Studio. A small Buoy HTTP server serves the landing page, a searchable package catalog, and health checks. Browser behavior uses plain JavaScript; no database or accounts are needed for this scaffold.
+BuoyBay's developer site introduces reusable packages, BPM, Ahoy, and Buoy Bay Studio. A small HTTP server serves the landing page, a searchable package catalog, and health checks. Browser behavior uses plain JavaScript; no database or accounts are needed for this scaffold.
 
 ## Local AI setup
 
@@ -9,8 +9,6 @@ On your own machine, install Buoy and run:
 ```sh
 buoy ai init --both
 ```
-
-Generated agent instructions, documentation indexes, and editor settings remain local and ignored.
 
 ## Build and run
 
@@ -80,4 +78,4 @@ Compose binds to loopback by default. Copy `.env.example` to `.env` to select a 
 - `content/`: written copy and package catalog data.
 - `deploy/`: example reverse-proxy configuration.
 
-Application code and deployment configuration use **AGPL-3.0-only**. Written content and documentation use **CC-BY-4.0**. See [LICENSING.md](LICENSING.md) and [CONTRIBUTING.md](CONTRIBUTING.md). No CLA is required. Build/test artifacts and private suites stay local; this repository does not itself deploy DNS, hosting, or a production service.
+Application code and deployment configuration use **AGPL-3.0-only**. Written content and documentation use **CC-BY-4.0**. See [LICENSING.md](LICENSING.md) and [CONTRIBUTING.md](CONTRIBUTING.md). No CLA is required. Configure DNS, hosting and production deployment separately from building the application.

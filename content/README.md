@@ -17,4 +17,4 @@ buoy tools/catalog.bui -o local/catalog/catalog
 mv local/catalog.next.json content/catalog.json
 ```
 
-The helper cross-checks `workspace.json` and the generated public `packages.json`; private, unlisted, and held entries are omitted even if an older catalog still lists them. It emits names, descriptions, and display categories only.
+The helper cross-checks `workspace.json` and `packages.json`, applying their listing and release-selection settings. It emits package names, descriptions and display categories.
