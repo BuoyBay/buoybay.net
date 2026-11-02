@@ -2,14 +2,6 @@
 
 BuoyBay's developer site introduces reusable packages, BPM, Ahoy, and Buoy Bay Studio. A small HTTP server serves the landing page, a searchable package catalog, and health checks. Browser behavior uses plain JavaScript; no database or accounts are needed for this scaffold.
 
-## Local AI setup
-
-On your own machine, install Buoy and run:
-
-```sh
-buoy ai init --both
-```
-
 ## Build and run
 
 The verified build environment is Linux x86_64, Debian 13, and Buoy 0.72.0. Install Buoy with its HTTPServer 1.1.0 package. The native preparation helper stages that package locally and copies the site assets:
