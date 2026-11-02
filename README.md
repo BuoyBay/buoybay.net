@@ -1,4 +1,4 @@
-# Package catalog and project site, native HTTP server
+# Package catalog and project site
 
 BuoyBay's developer site introduces reusable packages, BPM, Ahoy, and Buoy Bay Studio. A small HTTP server serves the landing page, a searchable package catalog, and health checks. Browser behavior uses plain JavaScript; no database or accounts are needed for this scaffold.
 
